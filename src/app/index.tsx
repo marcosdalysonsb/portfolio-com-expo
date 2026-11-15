@@ -1,4 +1,3 @@
-
 import React, { useRef, useState } from "react";
 import {
   View,
@@ -11,7 +10,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// CORES ORIGINAIS DO PORTFÓLIO
 const COLORS = {
   bg: "#f4f2ed",
   paper: "#fbfaf7",
@@ -22,7 +20,6 @@ const COLORS = {
   green: "#20b96a",
 };
 
-// TIPAGENS
 type SectionProps = {
   number: string;
   title: string;
@@ -45,14 +42,12 @@ type SkillProps = {
   items: string[];
 };
 
-// ABRIR LINKS EXTERNOS
 function openLink(url: string) {
   Linking.openURL(url).catch(() => {
     console.warn("Não foi possível abrir o link:", url);
   });
 }
 
-// COMPONENTE DE SEÇÃO
 function Section({ number, title, children }: SectionProps) {
   return (
     <View style={styles.section}>
@@ -66,7 +61,6 @@ function Section({ number, title, children }: SectionProps) {
   );
 }
 
-// COMPONENTE DE CARD
 function Card({
   code,
   title,
@@ -108,7 +102,6 @@ function Card({
   );
 }
 
-// COMPONENTE DE HABILIDADES
 function SkillCard({ title, code, items }: SkillProps) {
   return (
     <View style={styles.card}>
@@ -128,7 +121,6 @@ function SkillCard({ title, code, items }: SkillProps) {
   );
 }
 
-// COMPONENTE DE CONTATO
 function Contact({
   icon,
   label,
@@ -160,7 +152,6 @@ function Contact({
   );
 }
 
-// TELA PRINCIPAL
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
 
@@ -188,8 +179,6 @@ export default function HomeScreen() {
         barStyle="dark-content"
         backgroundColor={COLORS.bg}
       />
-
-      {/* NAVEGAÇÃO */}
       <View style={styles.navbar}>
         <TouchableOpacity
           style={styles.logo}
@@ -210,7 +199,6 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.page}
       >
-        {/* MENU DE NAVEGAÇÃO */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -234,8 +222,6 @@ export default function HomeScreen() {
             </TouchableOpacity>
           ))}
         </ScrollView>
-
-        {/* HERO / APRESENTAÇÃO */}
         <View
           style={styles.hero}
           onLayout={(event) =>
@@ -289,8 +275,6 @@ export default function HomeScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-
-          {/* SOBRE RESUMIDO */}
           <View style={styles.aboutList}>
             <View style={styles.aboutRow}>
               <Text style={styles.aboutLabel}>
@@ -320,8 +304,6 @@ export default function HomeScreen() {
             </View>
           </View>
         </View>
-
-        {/* EXPERIÊNCIA */}
         <View
           onLayout={(event) =>
             savePosition(
@@ -353,8 +335,6 @@ export default function HomeScreen() {
             />
           </Section>
         </View>
-
-        {/* HABILIDADES */}
         <View
           onLayout={(event) =>
             savePosition(
@@ -416,8 +396,6 @@ export default function HomeScreen() {
             />
           </Section>
         </View>
-
-        {/* PROJETOS */}
         <View
           onLayout={(event) =>
             savePosition("projetos", event.nativeEvent.layout.y)
@@ -515,8 +493,6 @@ export default function HomeScreen() {
             />
           </Section>
         </View>
-
-        {/* CONTATO */}
         <View
           onLayout={(event) =>
             savePosition("contato", event.nativeEvent.layout.y)
@@ -545,8 +521,6 @@ export default function HomeScreen() {
             />
           </Section>
         </View>
-
-        {/* RODAPÉ */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>
             Marcos Dalyson · Ciência da Computação
@@ -567,7 +541,6 @@ export default function HomeScreen() {
   );
 }
 
-// ESTILOS REACT NATIVE
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -579,7 +552,6 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
 
-  // NAVBAR
   navbar: {
     height: 66,
     paddingHorizontal: 22,
@@ -621,7 +593,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 
-  // MENU
   menuScroll: {
     marginTop: 18,
     marginBottom: 25,
@@ -647,7 +618,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  // HERO
   hero: {
     paddingTop: 35,
     paddingBottom: 55,
@@ -738,7 +708,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 
-  // SOBRE
   aboutList: {
     borderTopWidth: 2,
     borderTopColor: COLORS.ink,
@@ -763,7 +732,6 @@ const styles = StyleSheet.create({
     color: COLORS.ink,
   },
 
-  // SEÇÕES
   section: {
     paddingBottom: 48,
   },
@@ -792,7 +760,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
 
-  // CARDS
   card: {
     padding: 22,
     backgroundColor: COLORS.paper,
@@ -847,7 +814,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 
-  // TAGS
   tagsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -869,7 +835,6 @@ const styles = StyleSheet.create({
     color: COLORS.ink,
   },
 
-  // CONTATO
   contactRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -897,8 +862,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLORS.accent,
   },
-
-  // FOOTER
+  
   footer: {
     backgroundColor: COLORS.ink,
     marginHorizontal: -22,
