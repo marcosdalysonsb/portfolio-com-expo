@@ -80,7 +80,8 @@ const projetos: Projeto[] = [
     descricao:
       "Sistema desenvolvido para monitoramento e segurança do usuário, integrando sensores, câmera, GPS e visão computacional para identificação de quedas e acompanhamento em tempo real.",
     tech: "Python · Raspberry Pi · Flask · SQLite · YOLO · GPS · MPU6050 · Telegram",
-    label: "Projeto acadêmico",
+    label: "Repositório",
+    link: "https://github.com/andadorInteligente/projeto-andador",
   },
   {
     codigo: "PRJ-07",
@@ -120,9 +121,7 @@ function CardProjeto({ projeto }: { projeto: Projeto }) {
 
       <Text style={styles.cardTitulo}>{projeto.titulo}</Text>
 
-      <Text style={styles.cardDescricao}>
-        {projeto.descricao}
-      </Text>
+      <Text style={styles.cardDescricao}>{projeto.descricao}</Text>
 
       <Text style={styles.cardTech}>{projeto.tech}</Text>
     </TouchableOpacity>
@@ -156,8 +155,8 @@ export default function ProjetosScreen() {
         <Text style={styles.titulo}>Projetos</Text>
 
         <Text style={styles.introducao}>
-          Uma seleção de projetos acadêmicos e práticos
-          desenvolvidos durante minha trajetória de estudos.
+          Uma seleção de projetos acadêmicos e práticos desenvolvidos durante
+          minha trajetória de estudos.
         </Text>
 
         <View style={styles.divisor} />
@@ -173,23 +172,18 @@ export default function ProjetosScreen() {
         <Text style={styles.subtitulo}>Jogo da Forca</Text>
 
         <Text style={styles.introducao}>
-          Além dos projetos apresentados, este aplicativo
-          inclui uma versão nativa do Jogo da Forca,
-          desenvolvida com React Native.
+          Além dos projetos apresentados, este aplicativo inclui uma versão
+          nativa do Jogo da Forca, desenvolvida com React Native.
         </Text>
 
         <TouchableOpacity
           style={styles.botao}
           onPress={() => router.push("/jogo")}
         >
-          <Text style={styles.botaoTexto}>
-            Jogar Forca →
-          </Text>
+          <Text style={styles.botaoTexto}>Jogar Forca →</Text>
         </TouchableOpacity>
 
-        <Text style={styles.rodape}>
-          © 2026 · Marcos Dalyson
-        </Text>
+        <Text style={styles.rodape}>© 2026 · Marcos Dalyson</Text>
       </ScrollView>
     </SafeAreaView>
   );
