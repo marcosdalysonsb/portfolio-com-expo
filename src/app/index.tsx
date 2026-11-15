@@ -1,16 +1,17 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Linking,
   StatusBar,
+  Linking,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
-const COLORS = {
+const C = {
   bg: "#f4f2ed",
   paper: "#fbfaf7",
   ink: "#111111",
@@ -20,184 +21,60 @@ const COLORS = {
   green: "#20b96a",
 };
 
-type SectionProps = {
-  number: string;
-  title: string;
-  children: React.ReactNode;
-};
+const menu = [
+  { titulo: "Início", rota: "/" },
+  { titulo: "Sobre", rota: "/sobre" },
+  { titulo: "Acadêmica", rota: "/academica" },
+  { titulo: "Profissional", rota: "/profissional" },
+  { titulo: "Projetos", rota: "/projetos" },
+  { titulo: "Jogo", rota: "/jogo" },
+] as const;
 
-type CardProps = {
-  code: string;
-  title: string;
-  description: string;
-  meta?: string;
-  tech?: string;
-  link?: string;
-  label?: string;
-};
+const contatos = [
+  {
+    icone: "🐙",
+    titulo: "GITHUB",
+    valor: "github.com/marcosdalysonsb",
+    url: "https://github.com/marcosdalysonsb",
+  },
+  {
+    icone: "💼",
+    titulo: "LINKEDIN",
+    valor: "linkedin.com/in/marcos-dalyson",
+    url: "https://www.linkedin.com/in/marcos-dalyson-9457373b3/",
+  },
+  {
+    icone: "📧",
+    titulo: "E-MAIL",
+    valor: "marcosdalyson@gmail.com",
+    url: "mailto:marcosdalyson@gmail.com",
+  },
+];
 
-type SkillProps = {
-  title: string;
-  code: string;
-  items: string[];
-};
-
-function openLink(url: string) {
+function abrirLink(url: string) {
   Linking.openURL(url).catch(() => {
     console.warn("Não foi possível abrir o link:", url);
   });
 }
 
-function Section({ number, title, children }: SectionProps) {
-  return (
-    <View style={styles.section}>
-      <View style={styles.sectionHeading}>
-        <Text style={styles.sectionNumber}>{number}</Text>
-        <Text style={styles.sectionTitle}>{title}</Text>
-      </View>
-
-      {children}
-    </View>
-  );
-}
-
-function Card({
-  code,
-  title,
-  description,
-  meta,
-  tech,
-  link,
-  label,
-}: CardProps) {
-  return (
-    <TouchableOpacity
-      activeOpacity={link ? 0.75 : 1}
-      disabled={!link}
-      onPress={() => link && openLink(link)}
-      style={styles.card}
-    >
-      <View style={styles.cardHeader}>
-        <Text style={styles.cardCode}>{code}</Text>
-
-        {meta && <Text style={styles.cardMeta}>{meta}</Text>}
-
-        {label && (
-          <Text style={styles.cardMeta}>
-            {label} {link ? "↗" : ""}
-          </Text>
-        )}
-      </View>
-
-      <Text style={styles.cardTitle}>{title}</Text>
-
-      <Text style={styles.cardDescription}>
-        {description}
-      </Text>
-
-      {tech && (
-        <Text style={styles.cardTech}>{tech}</Text>
-      )}
-    </TouchableOpacity>
-  );
-}
-
-function SkillCard({ title, code, items }: SkillProps) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.cardCode}>{code}</Text>
-      <Text style={[styles.cardTitle, { marginTop: 12 }]}>
-        {title}
-      </Text>
-
-      <View style={styles.tagsContainer}>
-        {items.map((item) => (
-          <View style={styles.tag} key={item}>
-            <Text style={styles.tagText}>{item}</Text>
-          </View>
-        ))}
-      </View>
-    </View>
-  );
-}
-
-function Contact({
-  icon,
-  label,
-  value,
-  link,
-}: {
-  icon: string;
-  label: string;
-  value: string;
-  link: string;
-}) {
-  return (
-    <TouchableOpacity
-      style={styles.contactRow}
-      onPress={() => openLink(link)}
-    >
-      <View style={{ flex: 1 }}>
-        <Text style={styles.contactLabel}>
-          {icon} {label}
-        </Text>
-
-        <Text style={styles.contactValue}>
-          {value}
-        </Text>
-      </View>
-
-      <Text style={styles.contactArrow}>↗</Text>
-    </TouchableOpacity>
-  );
-}
-
 export default function HomeScreen() {
-  const scrollRef = useRef<ScrollView>(null);
-
-  const [positions, setPositions] = useState<
-    Record<string, number>
-  >({});
-
-  function savePosition(section: string, y: number) {
-    setPositions((old) => ({
-      ...old,
-      [section]: y,
-    }));
-  }
-
-  function goTo(section: string) {
-    scrollRef.current?.scrollTo({
-      y: positions[section] ?? 0,
-      animated: true,
-    });
-  }
-
   return (
-    <SafeAreaView style={styles.safeArea} edges={["top"]}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={COLORS.bg}
-      />
-      <View style={styles.navbar}>
-        <TouchableOpacity
-          style={styles.logo}
-          onPress={() => goTo("inicio")}
-        >
-          <Text style={styles.logoText}>MD</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <StatusBar barStyle="dark-content" />
 
-        <Text style={styles.navTitle}>
-          PORTFÓLIO / 2026
-        </Text>
+      <View style={styles.header}>
+        <View style={styles.logo}>
+          <Text style={styles.logoTexto}>MD</Text>
+        </View>
 
-        <View style={styles.navIndicator} />
+        <Text style={styles.headerTitulo}>PORTFÓLIO / 2026</Text>
+
+        <View style={styles.indicador} />
       </View>
 
       <ScrollView
-        ref={scrollRef}
+        contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.page}
       >
         <ScrollView
           horizontal
@@ -205,336 +82,118 @@ export default function HomeScreen() {
           style={styles.menuScroll}
           contentContainerStyle={styles.menu}
         >
-          {[
-            ["inicio", "Início"],
-            ["experiencia", "Experiência"],
-            ["habilidades", "Habilidades"],
-            ["projetos", "Projetos"],
-            ["extracurriculares", "Extras"],
-            ["contato", "Contato"],
-          ].map(([id, name]) => (
+          {menu.map((item) => (
             <TouchableOpacity
-              key={id}
+              key={item.rota}
               style={styles.menuItem}
-              onPress={() => goTo(id)}
+              onPress={() => router.navigate(item.rota)}
             >
-              <Text style={styles.menuText}>{name}</Text>
+              <Text style={styles.menuTexto}>{item.titulo}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
-        <View
-          style={styles.hero}
-          onLayout={(event) =>
-            savePosition("inicio", event.nativeEvent.layout.y)
-          }
-        >
-          <View style={styles.status}>
-            <View style={styles.statusDot} />
-            <Text style={styles.statusText}>
-              Disponível para oportunidades
+
+        <View style={styles.status}>
+          <View style={styles.statusDot} />
+          <Text style={styles.statusTexto}>Disponível para oportunidades</Text>
+        </View>
+
+        <Text style={styles.titulo}>Marcos{"\n"}Dalyson</Text>
+
+        <Text style={styles.meta}>
+          CIÊNCIA DA COMPUTAÇÃO · UNICAP · 5º PERÍODO
+        </Text>
+
+        <Text style={styles.introducao}>
+          Estudante de Ciência da Computação, com interesse em desenvolvimento
+          web, lógica de programação, resolução de problemas, além de
+          curiosidade em Cibersegurança.
+          {"\n\n"}
+          Busco oportunidades para colocar meus conhecimentos em prática e
+          continuar evoluindo profissionalmente.
+        </Text>
+
+        <View style={styles.botoes}>
+          <TouchableOpacity
+            style={styles.botaoPrincipal}
+            onPress={() => router.push("/projetos")}
+          >
+            <Text style={styles.botaoPrincipalTexto}>Ver projetos →</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.botaoSecundario}
+            onPress={() => abrirLink("https://github.com/marcosdalysonsb")}
+          >
+            <Text style={styles.botaoSecundarioTexto}>GitHub ↗</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.resumo}>
+          <View style={styles.resumoItem}>
+            <Text style={styles.resumoLabel}>🎓 FORMAÇÃO</Text>
+            <Text style={styles.resumoValor}>Ciência da Computação</Text>
+          </View>
+
+          <View style={styles.resumoItem}>
+            <Text style={styles.resumoLabel}>💡 INTERESSES</Text>
+            <Text style={styles.resumoValor}>
+              Web, Software, Cibersegurança
             </Text>
           </View>
 
-          <Text style={styles.heroTitle}>
-            Marcos{"\n"}Dalyson
-          </Text>
-
-          <Text style={styles.heroMeta}>
-            CIÊNCIA DA COMPUTAÇÃO · UNICAP · 5º PERÍODO
-          </Text>
-
-          <Text style={styles.lead}>
-            Estudante de Ciência da Computação, com
-            interesse em desenvolvimento web, lógica de
-            programação, resolução de problemas, além
-            de curiosidade em Cibersegurança.
-            {"\n\n"}
-            Busco oportunidades para colocar meus
-            conhecimentos em prática e continuar
-            evoluindo profissionalmente.
-          </Text>
-
-          <View style={styles.actions}>
-            <TouchableOpacity
-              style={styles.primaryButton}
-              onPress={() => goTo("projetos")}
-            >
-              <Text style={styles.primaryButtonText}>
-                Ver projetos →
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.secondaryButton}
-              onPress={() =>
-                openLink("https://github.com/marcosdalysonsb")
-              }
-            >
-              <Text style={styles.secondaryButtonText}>
-                GitHub ↗
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.aboutList}>
-            <View style={styles.aboutRow}>
-              <Text style={styles.aboutLabel}>
-                🎓 FORMAÇÃO
-              </Text>
-              <Text style={styles.aboutValue}>
-                Ciência da Computação
-              </Text>
-            </View>
-
-            <View style={styles.aboutRow}>
-              <Text style={styles.aboutLabel}>
-                💡 INTERESSES
-              </Text>
-              <Text style={styles.aboutValue}>
-                Web, Software, Cibersegurança
-              </Text>
-            </View>
-
-            <View style={styles.aboutRow}>
-              <Text style={styles.aboutLabel}>
-                🎯 OBJETIVO
-              </Text>
-              <Text style={styles.aboutValue}>
-                Primeira oportunidade em tecnologia
-              </Text>
-            </View>
+          <View style={styles.resumoItem}>
+            <Text style={styles.resumoLabel}>🎯 OBJETIVO</Text>
+            <Text style={styles.resumoValor}>
+              Primeira oportunidade em tecnologia
+            </Text>
           </View>
         </View>
-        <View
-          onLayout={(event) =>
-            savePosition(
-              "experiencia",
-              event.nativeEvent.layout.y
-            )
-          }
-        >
-          <Section number="01" title="Experiência">
-            <Card
-              code="ACA-01"
-              meta="5º Período"
-              title="Ciência da Computação"
-              description="Universidade Católica de Pernambuco · Formação acadêmica"
-            />
 
-            <Card
-              code="ACA-02"
-              meta="2023"
-              title="Técnico em Redes de Computadores"
-              description="ETE Pastor Isaac Martins Rodrigues · Ensino médio técnico"
-            />
-
-            <Card
-              code="PRO-01"
-              meta="EM ABERTO"
-              title="Experiência profissional"
-              description="Buscando minha primeira oportunidade profissional na área de tecnologia."
-            />
-          </Section>
-        </View>
-        <View
-          onLayout={(event) =>
-            savePosition(
-              "habilidades",
-              event.nativeEvent.layout.y
-            )
-          }
-        >
-          <Section number="02" title="Habilidades">
-            <SkillCard
-              code="HAB-01"
-              title="Frontend"
-              items={[
-                "HTML",
-                "CSS",
-                "JavaScript",
-                "React",
-                "Next.js",
-              ]}
-            />
-
-            <SkillCard
-              code="HAB-02"
-              title="Programação"
-              items={[
-                "Python",
-                "Java",
-                "C",
-                "Lógica de Programação",
-                "POO",
-              ]}
-            />
-
-            <SkillCard
-              code="HAB-03"
-              title="Redes"
-              items={[
-                "Redes de Computadores",
-                "Cisco Packet Tracer",
-              ]}
-            />
-
-            <SkillCard
-              code="HAB-04"
-              title="Ferramentas"
-              items={[
-                "Git",
-                "GitHub",
-                "VSCode",
-                "VirtualBox",
-                "Vercel",
-              ]}
-            />
-
-            <SkillCard
-              code="HAB-05"
-              title="Banco de Dados"
-              items={["SQL", "MySQL"]}
-            />
-          </Section>
-        </View>
-        <View
-          onLayout={(event) =>
-            savePosition("projetos", event.nativeEvent.layout.y)
-          }
-        >
-          <Section number="03" title="Projetos">
-            <Card
-              code="PRJ-01"
-              title="Sistema de Biblioteca"
-              description="Sistema de biblioteca desenvolvido em Java, aplicando classes e objetos, encapsulamento, herança e polimorfismo."
-              tech="Java · POO"
-              label="Repositório"
-              link="https://github.com/NextCoffeeJ/sistema_biblioteca"
-            />
-
-            <Card
-              code="PRJ-02"
-              title="Next Car"
-              description="Sistema para gerenciamento e venda de carros seminovos, desenvolvido com arquitetura moderna, padrões de projeto e testes automatizados."
-              tech="Java · Spring Boot · MySQL · Postman"
-              label="Repositório"
-              link="https://github.com/NextCar-Project/projeto-next-car"
-            />
-
-            <Card
-              code="PRJ-03"
-              title="Chat UDP"
-              description="Chat desenvolvido com UDP, com confirmação de entrega, simulação de perda de pacotes e retransmissão manual de mensagens."
-              tech="Python · UDP · Redes de Computadores"
-              label="Repositório"
-              link="https://github.com/marcosdalysonsb/Atividade_Redes_Chat"
-            />
-
-            <Card
-              code="PRJ-04"
-              title="Jogo de Dados"
-              description="Jogo interativo desenvolvido com JavaScript, utilizando lógica de programação e geração de resultados aleatórios."
-              tech="JavaScript · HTML · CSS"
-              label="Jogar"
-              link="https://programacao-web-mobile-rxnn.vercel.app/"
-            />
-
-            <Card
-              code="PRJ-05"
-              title="Extrator de PDF — 5º CTA"
-              description="Projeto acadêmico desenvolvido em Python para o 5º CTA do Exército Brasileiro, voltado à leitura e extração de dados em arquivos PDF, com uma interface para facilitar a utilização do sistema."
-              tech="Python"
-              label="Projeto acadêmico"
-            />
-
-            <Card
-              code="PRJ-06"
-              title="Andador Inteligente"
-              description="Sistema desenvolvido para monitoramento e segurança do usuário, integrando sensores, câmera, GPS e visão computacional para identificação de quedas e acompanhamento em tempo real."
-              tech="Python · Raspberry Pi · Flask · SQLite · YOLO · GPS · MPU6050 · Telegram"
-              label="Projeto acadêmico"
-            />
-
-            <Card
-              code="PRJ-07"
-              title="Next Fit — Sistema de Academia"
-              description="Projeto de modelagem de banco de dados para uma academia, estruturando informações de alunos, planos, instrutores, treinos e pagamentos, com definição de relacionamentos, chaves e organização das tabelas."
-              tech="SQL · MER · DER · Modelagem de Dados"
-              label="Projeto acadêmico"
-            />
-          </Section>
+        <View style={styles.secao}>
+          <Text style={styles.secaoNumero}>01</Text>
+          <Text style={styles.secaoTitulo}>Explorar portfólio</Text>
         </View>
 
-        {/* EXTRACURRICULARES */}
-        <View
-          onLayout={(event) =>
-            savePosition(
-              "extracurriculares",
-              event.nativeEvent.layout.y
-            )
-          }
-        >
-          <Section number="04" title="Extracurriculares">
-            <Card
-              code="EXT-01"
-              title="Palestra — Lógica de Programação"
-              description="Participação na Jornada de Tecnologia UNICAP 2026, com foco nos fundamentos necessários para o desenvolvimento de boas práticas de programação."
-            />
+        {menu
+          .filter((item) => item.rota !== "/")
+          .map((item) => (
+            <TouchableOpacity
+              key={item.rota}
+              style={styles.linkTela}
+              onPress={() => router.push(item.rota)}
+            >
+              <Text style={styles.linkTelaTexto}>{item.titulo}</Text>
+              <Text style={styles.seta}>→</Text>
+            </TouchableOpacity>
+          ))}
 
-            <Card
-              code="EXT-02"
-              title="Minicurso Introdução à Linguagem C"
-              description="Participação em minicurso sobre os fundamentos e conceitos básicos da linguagem C, durante a Jornada de Tecnologia UNICAP 2026."
-            />
-
-            <Card
-              code="EXT-03"
-              title="Palestra — Pré-programação"
-              description="Participação em palestra sobre estruturação do raciocínio lógico e planejamento de soluções antes da implementação do código."
-            />
-          </Section>
+        <View style={styles.secao}>
+          <Text style={styles.secaoNumero}>02</Text>
+          <Text style={styles.secaoTitulo}>Contato</Text>
         </View>
-        <View
-          onLayout={(event) =>
-            savePosition("contato", event.nativeEvent.layout.y)
-          }
-        >
-          <Section number="05" title="Contato">
-            <Contact
-              icon="🐙"
-              label="GITHUB"
-              value="github.com/marcosdalysonsb"
-              link="https://github.com/marcosdalysonsb"
-            />
 
-            <Contact
-              icon="💼"
-              label="LINKEDIN"
-              value="linkedin.com/in/marcos-dalyson"
-              link="https://www.linkedin.com/in/marcos-dalyson-9457373b3/"
-            />
+        {contatos.map((contato) => (
+          <TouchableOpacity
+            key={contato.titulo}
+            style={styles.contato}
+            onPress={() => abrirLink(contato.url)}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={styles.contatoLabel}>
+                {contato.icone} {contato.titulo}
+              </Text>
+              <Text style={styles.contatoValor}>{contato.valor}</Text>
+            </View>
+            <Text style={styles.seta}>↗</Text>
+          </TouchableOpacity>
+        ))}
 
-            <Contact
-              icon="📧"
-              label="E-MAIL"
-              value="marcosdalyson@gmail.com"
-              link="mailto:marcosdalyson@gmail.com"
-            />
-          </Section>
-        </View>
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
+          <Text style={styles.footerTexto}>
             Marcos Dalyson · Ciência da Computação
           </Text>
-
-          <Text style={styles.footerText}>
-            © 2026 · Desenvolvido com React Native + Expo
-          </Text>
-
-          <TouchableOpacity onPress={() => goTo("inicio")}>
-            <Text style={styles.footerLink}>
-              Voltar ao início ↑
-            </Text>
-          </TouchableOpacity>
+          <Text style={styles.footerTexto}>© 2026 · React Native + Expo</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -542,87 +201,71 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  safe: {
     flex: 1,
-    backgroundColor: COLORS.bg,
+    backgroundColor: C.bg,
   },
-
-  page: {
-    paddingHorizontal: 22,
-    paddingBottom: 24,
-  },
-
-  navbar: {
+  header: {
     height: 66,
     paddingHorizontal: 22,
+    backgroundColor: C.bg,
+    borderBottomWidth: 1,
+    borderBottomColor: C.line,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: COLORS.bg,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.line,
   },
-
   logo: {
     width: 40,
     height: 40,
     borderWidth: 1.5,
-    borderColor: COLORS.ink,
-    justifyContent: "center",
+    borderColor: C.ink,
     alignItems: "center",
+    justifyContent: "center",
   },
-
-  logoText: {
+  logoTexto: {
     fontFamily: "monospace",
     fontSize: 14,
     fontWeight: "bold",
-    color: COLORS.ink,
+    color: C.ink,
   },
-
-  navTitle: {
+  headerTitulo: {
     fontFamily: "monospace",
     fontSize: 11,
     letterSpacing: 1.5,
-    color: COLORS.muted,
+    color: C.muted,
   },
-
-  navIndicator: {
+  indicador: {
     width: 8,
     height: 8,
-    backgroundColor: COLORS.accent,
     borderRadius: 4,
+    backgroundColor: C.accent,
   },
-
+  content: {
+    paddingHorizontal: 22,
+    paddingBottom: 0,
+  },
   menuScroll: {
     marginTop: 18,
-    marginBottom: 25,
+    marginBottom: 45,
     flexGrow: 0,
   },
-
   menu: {
     gap: 10,
-    paddingRight: 12,
+    paddingRight: 10,
   },
-
   menuItem: {
     borderWidth: 1,
-    borderColor: COLORS.line,
-    backgroundColor: COLORS.paper,
+    borderColor: C.line,
+    backgroundColor: C.paper,
     paddingHorizontal: 14,
-    paddingVertical: 9,
+    paddingVertical: 10,
   },
-
-  menuText: {
+  menuTexto: {
     fontSize: 12,
-    color: COLORS.ink,
     fontWeight: "500",
+    color: C.ink,
   },
-
-  hero: {
-    paddingTop: 35,
-    paddingBottom: 55,
-  },
-
   status: {
     flexDirection: "row",
     alignItems: "center",
@@ -630,259 +273,161 @@ const styles = StyleSheet.create({
     gap: 9,
     paddingHorizontal: 14,
     paddingVertical: 8,
+    backgroundColor: C.paper,
     borderWidth: 1,
-    borderColor: COLORS.line,
+    borderColor: C.line,
     borderRadius: 30,
-    backgroundColor: COLORS.paper,
     marginBottom: 28,
   },
-
   statusDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: COLORS.green,
+    backgroundColor: C.green,
   },
-
-  statusText: {
+  statusTexto: {
     fontSize: 12,
-    color: COLORS.ink,
+    color: C.ink,
   },
-
-  heroTitle: {
+  titulo: {
     fontFamily: "serif",
     fontSize: 58,
     lineHeight: 64,
     letterSpacing: -2,
-    color: COLORS.ink,
+    color: C.ink,
   },
-
-  heroMeta: {
+  meta: {
     fontFamily: "monospace",
     fontSize: 11,
     lineHeight: 19,
-    letterSpacing: 0.7,
-    color: COLORS.accent,
+    color: C.accent,
     marginTop: 20,
   },
-
-  lead: {
+  introducao: {
     fontSize: 15,
     lineHeight: 25,
     color: "#3d3d3a",
     marginTop: 24,
     marginBottom: 30,
   },
-
-  actions: {
+  botoes: {
     flexDirection: "row",
-    gap: 10,
     flexWrap: "wrap",
+    gap: 10,
     marginBottom: 46,
   },
-
-  primaryButton: {
-    backgroundColor: COLORS.ink,
+  botaoPrincipal: {
+    backgroundColor: C.ink,
     paddingVertical: 15,
     paddingHorizontal: 22,
-    alignItems: "center",
   },
-
-  primaryButtonText: {
+  botaoPrincipalTexto: {
     color: "#ffffff",
-    fontWeight: "600",
     fontSize: 13,
+    fontWeight: "600",
   },
-
-  secondaryButton: {
+  botaoSecundario: {
     borderWidth: 1,
-    borderColor: COLORS.ink,
+    borderColor: C.ink,
     paddingVertical: 14,
     paddingHorizontal: 22,
-    alignItems: "center",
   },
-
-  secondaryButtonText: {
-    color: COLORS.ink,
-    fontWeight: "600",
+  botaoSecundarioTexto: {
+    color: C.ink,
     fontSize: 13,
+    fontWeight: "600",
   },
-
-  aboutList: {
+  resumo: {
     borderTopWidth: 2,
-    borderTopColor: COLORS.ink,
+    borderTopColor: C.ink,
+    marginBottom: 35,
   },
-
-  aboutRow: {
+  resumoItem: {
     paddingVertical: 18,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.line,
+    borderBottomColor: C.line,
   },
-
-  aboutLabel: {
+  resumoLabel: {
     fontFamily: "monospace",
     fontSize: 11,
-    letterSpacing: 1,
-    color: COLORS.muted,
+    color: C.muted,
     marginBottom: 6,
   },
-
-  aboutValue: {
+  resumoValor: {
+    color: C.ink,
     fontSize: 16,
-    color: COLORS.ink,
   },
-
-  section: {
-    paddingBottom: 48,
-  },
-
-  sectionHeading: {
+  secao: {
     borderTopWidth: 1,
-    borderTopColor: COLORS.line,
+    borderTopColor: C.line,
     paddingTop: 28,
+    marginTop: 25,
     marginBottom: 24,
     flexDirection: "row",
-    alignItems: "baseline",
+    alignItems: "center",
     gap: 14,
   },
-
-  sectionNumber: {
+  secaoNumero: {
     fontFamily: "monospace",
     fontSize: 13,
     fontWeight: "bold",
-    color: COLORS.accent,
+    color: C.accent,
   },
-
-  sectionTitle: {
+  secaoTitulo: {
     fontFamily: "serif",
     fontSize: 29,
-    color: COLORS.ink,
-    flexShrink: 1,
+    color: C.ink,
   },
-
-  card: {
-    padding: 22,
-    backgroundColor: COLORS.paper,
+  linkTela: {
+    backgroundColor: C.paper,
     borderWidth: 1,
-    borderColor: COLORS.line,
-    borderRadius: 3,
-    marginBottom: 14,
-  },
-
-  cardHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 10,
-    marginBottom: 15,
-  },
-
-  cardCode: {
-    fontFamily: "monospace",
-    fontSize: 11,
-    color: COLORS.accent,
-    fontWeight: "bold",
-  },
-
-  cardMeta: {
-    fontFamily: "monospace",
-    fontSize: 10,
-    color: COLORS.muted,
-    flexShrink: 1,
-    textAlign: "right",
-  },
-
-  cardTitle: {
-    fontFamily: "serif",
-    fontSize: 22,
-    lineHeight: 28,
-    color: COLORS.ink,
+    borderColor: C.line,
+    padding: 20,
     marginBottom: 10,
-  },
-
-  cardDescription: {
-    fontSize: 14,
-    lineHeight: 23,
-    color: COLORS.muted,
-  },
-
-  cardTech: {
-    fontFamily: "monospace",
-    fontSize: 11,
-    lineHeight: 19,
-    color: COLORS.accent,
-    marginTop: 16,
-  },
-
-  tagsContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
-    marginTop: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-
-  tag: {
-    backgroundColor: COLORS.bg,
-    borderWidth: 1,
-    borderColor: COLORS.line,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+  linkTelaTexto: {
+    fontFamily: "serif",
+    fontSize: 20,
+    color: C.ink,
   },
-
-  tagText: {
-    fontFamily: "monospace",
-    fontSize: 11,
-    color: COLORS.ink,
+  seta: {
+    fontSize: 20,
+    color: C.accent,
   },
-
-  contactRow: {
+  contato: {
+    borderTopWidth: 1,
+    borderTopColor: C.line,
+    paddingVertical: 20,
     flexDirection: "row",
     alignItems: "center",
-    borderTopWidth: 1,
-    borderTopColor: COLORS.line,
-    paddingVertical: 20,
-    paddingHorizontal: 4,
     gap: 12,
   },
-
-  contactLabel: {
+  contatoLabel: {
     fontFamily: "monospace",
     fontSize: 11,
-    color: COLORS.muted,
     letterSpacing: 1,
+    color: C.muted,
     marginBottom: 7,
   },
-
-  contactValue: {
+  contatoValor: {
     fontSize: 14,
-    color: COLORS.ink,
+    color: C.ink,
   },
-
-  contactArrow: {
-    fontSize: 20,
-    color: COLORS.accent,
-  },
-  
   footer: {
-    backgroundColor: COLORS.ink,
+    backgroundColor: C.ink,
     marginHorizontal: -22,
-    marginBottom: -24,
     paddingHorizontal: 24,
     paddingVertical: 35,
+    marginTop: 35,
     gap: 10,
   },
-
-  footerText: {
+  footerTexto: {
     fontFamily: "monospace",
     fontSize: 11,
-    color: "#c9c7c0",
     lineHeight: 19,
-  },
-
-  footerLink: {
-    fontFamily: "monospace",
-    fontSize: 12,
-    color: "#ffffff",
-    marginTop: 14,
+    color: "#c9c7c0",
   },
 });
