@@ -1,56 +1,229 @@
-# Welcome to your Expo app 👋
+# 🚀 Portfólio Mobile — Marcos Dalyson
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Ciência da Computação • Desenvolvimento Mobile • React Native • Expo
 
-## Get started
+---
 
-1. Install dependencies
+## 📌 Sobre o projeto
 
-   ```bash
-   npm install
-   ```
+Este projeto é a versão mobile do meu portfólio acadêmico e profissional, desenvolvido com **React Native e Expo**.
 
-2. Start the app
+A aplicação apresenta minha formação acadêmica, experiência profissional, habilidades, projetos e informações pessoais por meio de uma interface organizada em telas independentes.
 
-   ```bash
-   npx expo start
-   ```
+O aplicativo também conta com um **Jogo da Forca nativo**, desenvolvido com React Native e TypeScript, utilizando gerenciamento de estado e componentes interativos.
 
-In the output, you'll find options to open the app in a
+O projeto representa a migração do meu portfólio original, desenvolvido com **React e Next.js**, para o ambiente de desenvolvimento mobile.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🎯 Objetivos
 
-## Get a fresh project
+- Apresentar minha formação acadêmica e trajetória na área de tecnologia;
+- Reunir meus principais projetos;
+- Mostrar meus conhecimentos técnicos e habilidades;
+- Migrar um projeto web para uma aplicação mobile;
+- Praticar React Native, Expo e TypeScript;
+- Implementar navegação entre telas utilizando Expo Router;
+- Desenvolver um jogo interativo com componentes nativos;
+- Criar uma interface adaptada a dispositivos móveis;
+- Acompanhar minha evolução no desenvolvimento de software.
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
+## 🛠️ Tecnologias
+
+### Linguagens, Frameworks e Bibliotecas
+
+| Tecnologia | Utilização |
+| :--- | :--- |
+| **React Native** | Desenvolvimento da interface mobile |
+| **Expo** | Ambiente e ferramentas de desenvolvimento |
+| **React** | Criação e organização dos componentes |
+| **TypeScript** | Tipagem e lógica da aplicação |
+| **TSX** | Estrutura dos componentes visuais |
+| **Expo Router** | Navegação e gerenciamento de rotas |
+| **React Hooks** | Gerenciamento de estado e funcionalidades |
+| **StyleSheet** | Estilização dos componentes |
+| **React Native Safe Area Context** | Adaptação da interface às áreas seguras da tela |
+| **React Native Linking** | Abertura de links externos |
+
+### Ferramentas
+
+| Ferramenta | Utilização |
+| :--- | :--- |
+| **Git** | Controle de versão |
+| **GitHub** | Armazenamento do código-fonte |
+| **VS Code** | Desenvolvimento |
+| **Node.js** | Ambiente de execução das ferramentas |
+| **npm** | Gerenciamento de dependências |
+| **Expo Go** | Execução e testes do aplicativo em dispositivos móveis |
+
+---
+
+## ⚙️ Funcionalidades
+
+### 📱 Portfólio Mobile
+
+- 🪪 Apresentação pessoal;
+- 🎓 Formação acadêmica;
+- 💼 Experiência profissional;
+- 💻 Projetos acadêmicos e pessoais;
+- 🏆 Atividades extracurriculares;
+- 💡 Habilidades e tecnologias;
+- 📩 Informações de contato;
+- 🔗 Links para GitHub, LinkedIn e repositórios;
+- 📱 Interface adaptada a dispositivos móveis;
+- 🧭 Navegação entre telas utilizando Expo Router.
+
+### 🗂️ Telas do aplicativo
+
+O aplicativo possui **seis telas principais**, organizadas por meio do Expo Router.
+
+| Tela | Descrição |
+| :--- | :--- |
+| 🏠 **Home** | Apresentação pessoal, resumo e navegação |
+| 👤 **Sobre** | Informações pessoais, habilidades e tecnologias utilizadas |
+| 🎓 **Experiência Acadêmica** | Formação acadêmica e atividades extracurriculares |
+| 💼 **Experiência Profissional** | Objetivos profissionais e áreas de interesse |
+| 💻 **Projetos** | Apresentação dos projetos desenvolvidos |
+| 🎮 **Jogo da Forca** | Jogo interativo implementado nativamente |
+
+Cada tela possui seu próprio arquivo `.tsx`, permitindo uma organização modular da aplicação.
+
+---
+
+## 🎮 Jogo da Forca
+
+O aplicativo inclui um Jogo da Forca desenvolvido **nativamente com React Native**, sem utilização de WebView ou redirecionamento para páginas externas.
+
+### Funcionalidades do jogo
+
+- 🎲 Escolha aleatória de palavras;
+- 🏷️ 3 categorias diferentes;
+- 📝 30 palavras disponíveis;
+- ⌨️ Teclado interativo;
+- ❤️ 6 tentativas;
+- 🟢 Identificação de letras corretas;
+- 🔴 Identificação de letras incorretas;
+- 🏆 Mensagem de vitória;
+- 💀 Mensagem de derrota;
+- 🔄 Botão para iniciar uma nova partida;
+- 📱 Interface adaptada ao dispositivo móvel.
+
+---
+
+## 📚 Categorias do Jogo
+
+O Jogo da Forca possui três categorias:
+
+- 🐶 **Animais**
+- 🪑 **Objetos**
+- 🍕 **Comidas**
+
+*Cada categoria possui 10 palavras, totalizando 30 palavras.*
+
+---
+
+## 📁 Estrutura do projeto
+
+```text
+portfolio-com-expo/
+│
+├── src/
+│   ├── app/
+│   │   ├── _layout.tsx
+│   │   ├── index.tsx
+│   │   ├── sobre.tsx
+│   │   ├── academica.tsx
+│   │   ├── profissional.tsx
+│   │   ├── projetos.tsx
+│   │   └── jogo.tsx
+│   │
+│   ├── components/
+│   ├── constants/
+│   └── hooks/
+│
+├── assets/
+├── package.json
+└── README.md
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+### Organização das telas
 
-### Other setup steps
+- `index.tsx` — Tela inicial do portfólio;
+- `sobre.tsx` — Informações pessoais e tecnologias;
+- `academica.tsx` — Experiência acadêmica;
+- `profissional.tsx` — Experiência profissional;
+- `projetos.tsx` — Projetos desenvolvidos;
+- `jogo.tsx` — Jogo da Forca nativo;
+- `_layout.tsx` — Configuração da navegação com Expo Router.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+---
 
-## Learn more
+## ▶️ Como executar o projeto
 
-To learn more about developing your project with Expo, look at the following resources:
+### Pré-requisitos
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Node.js instalado;
+- npm disponível;
+- VS Code ou outro editor de código;
+- Aplicativo Expo Go no dispositivo móvel.
 
-## Join the community
+### 1. Clonar o repositório
 
-Join our community of developers creating universal apps.
+```bash
+git clone https://github.com/marcosdalysonsb/portfolio-com-expo.git
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 2. Acessar a pasta do projeto
+
+```bash
+cd portfolio-com-expo
+```
+
+### 3. Instalar as dependências
+
+```bash
+npm install
+```
+
+### 4. Iniciar o Expo
+
+```bash
+npx expo start
+```
+
+### 5. Executar no celular
+
+Abra o aplicativo **Expo Go** e escaneie o QR Code exibido no terminal.
+
+O aplicativo será carregado no dispositivo para testes e navegação.
+
+---
+
+## 🔄 Migração do Portfólio Web para Mobile
+
+O projeto original foi desenvolvido com **React e Next.js**, utilizando tecnologias voltadas ao desenvolvimento web.
+
+Nesta versão, a aplicação foi adaptada para **React Native e Expo**, substituindo elementos HTML e estilos CSS por componentes e recursos nativos.
+
+### Principais adaptações
+
+| Versão Web | Versão Mobile |
+| :--- | :--- |
+| Next.js | React Native + Expo |
+| HTML | Componentes View, Text e ScrollView |
+| CSS | StyleSheet |
+| Navegação entre seções | Expo Router |
+| Eventos de clique | Eventos de toque |
+| Jogo da Forca Web | Jogo da Forca nativo |
+| Navegador | Aplicativo mobile |
+
+O objetivo da migração foi preservar o conteúdo e as funcionalidades principais do portfólio, adaptando sua estrutura ao ambiente mobile.
+
+---
+
+
+## 👨‍💻 Autor
+
+**Marcos Dalyson**
